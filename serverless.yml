@@ -4,6 +4,7 @@ provider:
   name: aws
   runtime: nodejs18.x
   timeout: 600
+  profile: default
   region: ap-south-1
   stage: ${opt:stage, 'dev'}
   environment:

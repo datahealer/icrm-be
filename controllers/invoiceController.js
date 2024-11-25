@@ -28,7 +28,6 @@ export const getAllInvoices = async (req, res, next) => {
 
     const invoices = await features.query;
 
-
     res.status(200).json({
       status: "success",
       results: invoices.length,
@@ -209,7 +208,6 @@ export const generateInvoiceData = async (req, res, next) => {
       return res.status(401).send({ error: "Email header missing" });
     }
 
-
     // Find the invoice by name
     const invoice = await Invoice.findById(id)
       .populate("clientId")
@@ -223,16 +221,11 @@ export const generateInvoiceData = async (req, res, next) => {
         .json({ status: "fail", message: "Invoice not found" });
     }
 
-    // Extract client details
     const client = await Client.findById(invoice.clientId);
 
-
-    // Extract project details
     const project = await Project.findById(invoice.projectId);
-    // Extract people details
     const preparedBy = await People.findById(invoice.preparedBy);
     const reviewedBy = await People.find({ _id: { $in: invoice.reviewedBy } });
-    // Calculate previous dues
     const previousInvoices = await Invoice.find({
       clientId: client._id,
       status: { $ne: "PAID" },

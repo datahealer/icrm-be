@@ -1,27 +1,34 @@
 import mongoose from "mongoose";
-import People from "./People.js";
 
 const { Schema, model } = mongoose;
 
 const purchaseItemSchema = new Schema({
-  imageFolderUrl: {
+  itemImage: {
     type: String,
     required: true,
   },
-  code: {
+  invoiceImage: {
     type: String,
     required: true,
   },
-  isService: {
-    type: Boolean,
-    required: true,
-  },
+  // isService: {
+  //   type: Boolean,
+  //   required: true,
+  // },
   vendorId: {
     type: Schema.Types.ObjectId,
     ref: "People",
     required: true,
   },
-  unit: {
+  itemId: {
+    type: Schema.Types.ObjectId,
+    ref: "Item",
+    required: true,
+  },
+  type: {
+    type: String,
+  },
+  unitType: {
     type: String,
     enum: [
       "Hours",
@@ -43,7 +50,14 @@ const purchaseItemSchema = new Schema({
   description: {
     type: String,
   },
-  account: {
+  purchaseAccount: {
+    type: String,
+    required: true,
+  },
+  purpose: {
+    type: String,
+  },
+  salesAccount: {
     type: String,
     required: true,
   },
@@ -71,11 +85,20 @@ const purchaseItemSchema = new Schema({
       "GST-28",
     ],
   },
-  HSN: {
+  hsn: {
     type: String,
   },
-  SAC: {
+  sac: {
     type: String,
+  },
+  totalGst: {
+    type: Number,
+  },
+  amountWoGst: {
+    type: Number,
+  },
+  totalAmount: {
+    type: Number,
   },
 });
 

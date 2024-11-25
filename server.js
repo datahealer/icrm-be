@@ -1,4 +1,4 @@
-import serverless from 'serverless-http';
+import serverless from "serverless-http";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -12,6 +12,7 @@ import profileRoutes from "./routes/profileRoutes.js";
 import invoiceRoutes from "./routes/invoiceRoutes.js";
 import purchaseItemRoutes from "./routes/purchaseItemRoutes.js";
 import purchaseOrderRoutes from "./routes/purchaseOrderRoutes.js";
+import s3Routes from "./routes/s3Routes.js";
 const app = express();
 
 // Load environment variables from .env file
@@ -35,12 +36,12 @@ app.use(
 // Routes
 app.use("/auth", userRoutes);
 app.use("/profile", profileRoutes);
+app.use("/s3", s3Routes);
 app.use("/people", peopleRoutes);
 app.use("/client", clientRoutes);
 app.use("/project", projectRoutes);
-app.use('/invoices', invoiceRoutes);
-app.use('/purchaseItems', purchaseItemRoutes);
-app.use('/purchaseOrder', purchaseOrderRoutes);
-
+app.use("/invoices", invoiceRoutes);
+app.use("/purchaseItems", purchaseItemRoutes);
+app.use("/purchaseOrder", purchaseOrderRoutes);
 
 export const handler = serverless(app);
