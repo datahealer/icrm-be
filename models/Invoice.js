@@ -157,6 +157,7 @@ const invoiceSchema = new mongoose.Schema({
       "PART_PAID_PART_FORGIVEN",
       "FORGIVEN",
       "CANCELLED_OR_VOID",
+      "AMOUNT_RECEIVED"
     ],
   },
 
