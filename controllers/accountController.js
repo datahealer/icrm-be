@@ -20,7 +20,11 @@ export const createAccount = async (req, res) => {
 };
 export const getAllAccounts = async (req, res) => {
   try {
-    const accounts = await Accounts.find();
+    const { type } = req.query;
+
+    const query = type ? { type } : {};
+    const accounts = await Accounts.find(query);
+
     res.status(200).json({
       success: true,
       message: "Accounts fetched successfully",

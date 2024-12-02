@@ -212,8 +212,7 @@ const clientSchema = new Schema({
   },
 
   receivingAccount: {
-    type: String,
-    enum: ["IOB_1173", "IDFC_3481", "ICIC_XXX"],
+    type: Schema.Types.ObjectId,
     required: true,
   },
   receivingCurrency: {
