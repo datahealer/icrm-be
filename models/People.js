@@ -103,9 +103,9 @@ const peopleSchema = new Schema(
     paymentChannel: {
       type: String,
       enum: [
-        "DOMESTIC BANK TRANSFER",
-        "INTERNATIONAL BANK TRANSFER",
-        "VIA THIRD PARTY",
+        "DOMESTIC_BANK_TRANSFER",
+        "INTERNATIONAL_BANK_TRANSFER",
+        "VIA_THIRD_PARTY",
       ],
       // required: true,
     },
