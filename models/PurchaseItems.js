@@ -51,14 +51,14 @@ const purchaseItemSchema = new Schema({
     type: String,
   },
   purchaseAccount: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: true,
   },
   purpose: {
     type: String,
   },
   salesAccount: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: true,
   },
   tax: {
