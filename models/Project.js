@@ -68,38 +68,41 @@ const resourceSchema = new Schema({
 });
 
 // Define Project schema
-const projectSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
+const projectSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    clientId: {
+      type: Schema.Types.ObjectId,
+      ref: "Client",
+      required: true,
+    },
+    managerId: {
+      type: String,
+      ref: "People",
+      required: true,
+    },
+    acquisitionPersonId: {
+      type: String,
+      ref: "People",
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["In Progress", "Cancelled", "Completed", "Yet to Start"],
+      required: true,
+    },
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    endDate: Date,
+    resources: [resourceSchema],
   },
-  clientId: {
-    type: Schema.Types.ObjectId,
-    ref: "Client",
-    required: true,
-  },
-  managerId: {
-    type: String,
-    ref: "People",
-    required: true,
-  },
-  acquisitionPersonId: {
-    type: String,
-    ref: "People",
-    required: true,
-  },
-  status: {
-    type: String,
-    enum: ["In Progress", "Cancelled", "Completed", "Yet to Start"],
-    required: true,
-  },
-  startDate: {
-    type: Date,
-    required: true,
-  },
-  endDate: Date,
-  resources: [resourceSchema],
-});
+  { timestamps: true }
+);
 
 const Project = model("Project", projectSchema);
 

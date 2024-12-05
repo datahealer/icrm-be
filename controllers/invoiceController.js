@@ -85,6 +85,7 @@ export const createInvoice = async (req, res, next) => {
       sgstRate,
       cgstRate,
       igstRate,
+      totalAmountDue,
     } = req.body;
 
     // Ensure items is an array to avoid errors when mapping
@@ -121,6 +122,7 @@ export const createInvoice = async (req, res, next) => {
       mileStones: milestones,
       services,
       status,
+      invoiceAmount: totalAmountDue,
       doc,
       preparedBy: preparedByData,
     };

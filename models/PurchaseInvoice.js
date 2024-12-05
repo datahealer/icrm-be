@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-import People from './People.js';
-import Project from './Project.js';
-import PurchaseItem from './PurchaseItems.js';
-import User from './User.js';
+import mongoose from "mongoose";
+import People from "./People.js";
+import Project from "./Project.js";
+import PurchaseItem from "./PurchaseItems.js";
+import User from "./User.js";
 
 const { Schema, model } = mongoose;
 
@@ -11,7 +11,7 @@ let serialNumberCounter = 1;
 const serviceSchema = new Schema({
   purchaseItemId: {
     type: Schema.Types.ObjectId,
-    ref: 'PurchaseItem',
+    ref: "PurchaseItem",
     required: true,
   },
   name: {
@@ -57,7 +57,7 @@ const serviceSchema = new Schema({
   },
   sgstRate: {
     type: String,
-    enum: ['Nil', '9'],
+    enum: ["Nil", "9"],
     required: true,
   },
   sgstAmount: {
@@ -66,7 +66,7 @@ const serviceSchema = new Schema({
   },
   cgstRate: {
     type: String,
-    enum: ['Nil', '9'],
+    enum: ["Nil", "9"],
     required: true,
   },
   cgstAmount: {
@@ -75,7 +75,7 @@ const serviceSchema = new Schema({
   },
   igstRate: {
     type: String,
-    enum: ['Nil', '18'],
+    enum: ["Nil", "18"],
     required: true,
   },
   igstAmount: {
@@ -87,7 +87,7 @@ const serviceSchema = new Schema({
 const productSchema = new Schema({
   purchaseItemId: {
     type: Schema.Types.ObjectId,
-    ref: 'PurchaseItem',
+    ref: "PurchaseItem",
     required: true,
   },
   name: {
@@ -129,7 +129,7 @@ const productSchema = new Schema({
   },
   sgstRate: {
     type: String,
-    enum: ['Nil', '9'],
+    enum: ["Nil", "9"],
     required: true,
   },
   sgstAmount: {
@@ -138,7 +138,7 @@ const productSchema = new Schema({
   },
   cgstRate: {
     type: String,
-    enum: ['Nil', '9'],
+    enum: ["Nil", "9"],
     required: true,
   },
   cgstAmount: {
@@ -147,7 +147,7 @@ const productSchema = new Schema({
   },
   igstRate: {
     type: String,
-    enum: ['Nil', '18'],
+    enum: ["Nil", "18"],
     required: true,
   },
   igstAmount: {
@@ -166,132 +166,137 @@ const adjustmentSchema = new Schema({
   status: {
     type: String,
     enum: [
-      'DRAFT',
-      'FINALIZED',
-      'DUE',
-      'PAID',
-      'PART_PAID_PART_DUE',
-      'PART_PAID_PART_FORGIVEN',
-      'FORGIVEN',
-      'CANCELLED_OR_VOID',
+      "DRAFT",
+      "FINALIZED",
+      "DUE",
+      "PAID",
+      "PART_PAID_PART_DUE",
+      "PART_PAID_PART_FORGIVEN",
+      "FORGIVEN",
+      "CANCELLED_OR_VOID",
     ],
   },
 });
 
-const purchaseOrderSchema = new Schema({
-  vendorId: {
-    type: Schema.Types.ObjectId,
-    ref: 'People',
-    required: true,
-  },
-  projectId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Project',
-  },
-  serialNumber: {
-    type: Number,
-    default: () => serialNumberCounter++,
-  },
-  number: {
-    type: String,
-    required: true,
-  },
-  poNumber: {
-    type: String,
-  },
-  date: {
-    type: Date,
-    required: true,
-  },
-  account: {
-    type: String,
-    required: true,
-  },
-  purchaseType: {
-    type: String,
-    enum: ['products', 'services', 'both'],
-    required: true,
-  },
-  serviceFromDate: {
-    type: Date,
-  },
-  serviceToDate: {
-    type: Date,
-  },
-  mileStones: {
-    type: String,
-  },
-  serviceDays: {
-    type: Number,
-  },
-  dueDate: {
-    type: Date,
-    required: true,
-  },
-  preparedBy: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  reviewedBy: [{
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  }],
-  services: {
-    type: [serviceSchema],
-    required: function () {
-      return this.purchaseType !== 'products';
+const purchaseOrderSchema = new Schema(
+  {
+    vendorId: {
+      type: Schema.Types.ObjectId,
+      ref: "People",
+      required: true,
     },
-  },
-  products: {
-    type: [productSchema],
-    required: function () {
-      return this.purchaseType !== 'services';
+    projectId: {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
     },
-  },
-  adjustments: {
-    type: [adjustmentSchema],
-    default: [],
-  },
-  notes: {
-    type: String,
-  },
-  vendorInvoiceUrl: {
-    type: String,
-  },
-  paidAmount: {
-    type: Number,
-  },
-  forgivenAmount: {
-    type: Number,
-  },
-  paidAmountINR: {
-    type: Number,
-  },
-  forgivenReason: {
-    type: String,
-  },
-  cancellationReason: {
-    type: String,
-  },
-  paymentChannel: {
-    type: String,
-    enum: [
-      'WISE',
-      'WISE_ACH',
-      'XE',
-      'UPWORK',
-      'AIRWALLEX',
-      'PAYPAL',
-      'INTERNATIONAL_WIRE',
-      'NEFT/UPI',
-      'CHEQUE_INR',
-      'CASH_INR',
-      'CASH_USD',
+    serialNumber: {
+      type: Number,
+      default: () => serialNumberCounter++,
+    },
+    number: {
+      type: String,
+      required: true,
+    },
+    poNumber: {
+      type: String,
+    },
+    date: {
+      type: Date,
+      required: true,
+    },
+    account: {
+      type: String,
+      required: true,
+    },
+    purchaseType: {
+      type: String,
+      enum: ["products", "services", "both"],
+      required: true,
+    },
+    serviceFromDate: {
+      type: Date,
+    },
+    serviceToDate: {
+      type: Date,
+    },
+    mileStones: {
+      type: String,
+    },
+    serviceDays: {
+      type: Number,
+    },
+    dueDate: {
+      type: Date,
+      required: true,
+    },
+    preparedBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    reviewedBy: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
     ],
+    services: {
+      type: [serviceSchema],
+      required: function () {
+        return this.purchaseType !== "products";
+      },
+    },
+    products: {
+      type: [productSchema],
+      required: function () {
+        return this.purchaseType !== "services";
+      },
+    },
+    adjustments: {
+      type: [adjustmentSchema],
+      default: [],
+    },
+    notes: {
+      type: String,
+    },
+    vendorInvoiceUrl: {
+      type: String,
+    },
+    paidAmount: {
+      type: Number,
+    },
+    forgivenAmount: {
+      type: Number,
+    },
+    paidAmountINR: {
+      type: Number,
+    },
+    forgivenReason: {
+      type: String,
+    },
+    cancellationReason: {
+      type: String,
+    },
+    paymentChannel: {
+      type: String,
+      enum: [
+        "WISE",
+        "WISE_ACH",
+        "XE",
+        "UPWORK",
+        "AIRWALLEX",
+        "PAYPAL",
+        "INTERNATIONAL_WIRE",
+        "NEFT/UPI",
+        "CHEQUE_INR",
+        "CASH_INR",
+        "CASH_USD",
+      ],
+    },
   },
-});
+  { timestamps: true }
+);
 
-const PurchaseOrder = model('PurchaseOrder', purchaseOrderSchema);
+const PurchaseOrder = model("PurchaseOrder", purchaseOrderSchema);
 
 export default PurchaseOrder;
