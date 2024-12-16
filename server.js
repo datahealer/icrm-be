@@ -13,6 +13,7 @@ import invoiceRoutes from "./routes/invoiceRoutes.js";
 import purchaseItemRoutes from "./routes/purchaseItemRoutes.js";
 import purchaseOrderRoutes from "./routes/purchaseOrderRoutes.js";
 import accountRoutes from "./routes/accountRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 import s3Routes from "./routes/s3Routes.js";
 const app = express();
 
@@ -45,5 +46,6 @@ app.use("/invoices", invoiceRoutes);
 app.use("/purchaseItems", purchaseItemRoutes);
 app.use("/purchaseOrder", purchaseOrderRoutes);
 app.use("/account", accountRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 export const handler = serverless(app);
