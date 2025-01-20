@@ -9,7 +9,8 @@
     "start": "nodemon server.js",
     "dev": "cross-env NODE_ENV=development sls offline start --stage offline",
     "offline": "NODE_ENV=development sls offline start --stage offline",
-    "deploy:dev": "NODE_ENV=development serverless deploy --aws-profile inzint-internal --stage development"
+    "deploy:dev": "NODE_ENV=development serverless deploy --aws-profile inzint-internal --stage development",
+    "deploy:directprod":	"NODE_ENV=production serverless deploy --aws-profile inzint-internal  --stage prod"
   },
   "keywords": [],
   "author": "",
