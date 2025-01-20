@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { Schema, model } from "mongoose";
+const  { Schema, model } = mongoose;
 
 const accountSchema = new Schema(
   {
@@ -43,5 +43,5 @@ const accountSchema = new Schema(
   { timestamps: true }
 );
 
-const Accounts = model("Accounts", accountSchema);
-export default Accounts;
+export const Accounts = model("Accounts", accountSchema);
+

@@ -31,7 +31,7 @@ export const createPurchaseItem = async (req, res) => {
 // Get all purchase items
 export const getPurchaseItems = async (req, res) => {
   try {
-    const purchaseItems = await PurchaseItem.find().populate("vendorId").populate("itemId");
+    const purchaseItems = await PurchaseItem.find().populate("vendorId").populate("itemId").populate("salesAccount");
     res.status(200).json(purchaseItems);
   } catch (error) {
     res.status(500).json({ message: error.message });

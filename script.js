@@ -1,4 +1,4 @@
-import { assetData } from "./models/assets.js";
+import { assetData } from "./constant/assets.js";
 import Item from "./models/items.js";
 import connect from "./config/database.js";
 
@@ -12,11 +12,11 @@ export const insertAsset = async () => {
       depreciationRate: asset.Depreciation_Rate,
       itemCode: asset.ItemCode,
     }));
-    console.log(formattedData.length);
     await Item.insertMany(formattedData, { ordered: false });
-    console.log("Data inserted");
+    return true;
   } catch (error) {
     console.log(error.message);
+    return false;
   }
 };
 

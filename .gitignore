@@ -2,5 +2,4 @@ node_modules/
 .env
 index.js
 webpack.config.cjs
-.github
 .serverless

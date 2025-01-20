@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Accounts} from "./Accounts.js";
 
 const { Schema, model } = mongoose;
 
@@ -53,6 +54,7 @@ const purchaseItemSchema = new Schema(
     },
     purchaseAccount: {
       type: Schema.Types.ObjectId,
+      ref: "Accounts",
       required: true,
     },
     purpose: {
@@ -60,6 +62,7 @@ const purchaseItemSchema = new Schema(
     },
     salesAccount: {
       type: Schema.Types.ObjectId,
+      ref: "Accounts",
       required: true,
     },
     tax: {
