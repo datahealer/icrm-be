@@ -38,6 +38,9 @@ jobs:
       # Step 5: Install dependencies using Yarn
       - name: Install dependencies
         run: yarn install
+      
+      - name: Install Serverless
+        run: yarn global add serverless
 
       # Step 6: Configure AWS credentials
       - name: Configure AWS credentials
