@@ -38,11 +38,12 @@ jobs:
       # Step 5: Install dependencies using Yarn
       - name: Install dependencies
         run: yarn install
-      
+
+      # Step 6: Install Serverless framework using Yarn
       - name: Install Serverless
         run: yarn global add serverless
 
-      # Step 6: Configure AWS credentials
+      # Step 7: Configure AWS credentials
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -50,7 +51,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      # Step 7: Deploy with Serverless (Development)
+      # Step 8: Deploy with Serverless (Development)
       - name: Deploy with Serverless (Development)
         env:
           NODE_ENV: ${{ secrets.NODE_ENV }}
@@ -60,5 +61,7 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           OPENSSL_CONF: ${{ secrets.OPENSSL_CONF }}
           AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
         run: serverless deploy --stage ${{ secrets.NODE_ENV }}
