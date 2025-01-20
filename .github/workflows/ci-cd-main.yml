@@ -33,16 +33,29 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      # Step 5: Deploy with Serverless Framework
+      # Step 5: Log all secrets (FOR DEBUGGING ONLY)
+      - name: Log Secrets (DEBUG ONLY)
+        run: |
+          echo "NODE_ENV: ${{ secrets.NODE_ENV }}"
+          echo "SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}"
+          echo "MONGODB_URL: ${{ secrets.MONGODB_URL }}"
+          echo "JWT_SECRET: ${{ secrets.JWT_SECRET }}"
+          echo "RESEND_API: ${{ secrets.RESEND_API }}"
+          echo "OPENSSL_CONF: ${{ secrets.OPENSSL_CONF }}"
+          echo "AWS_BUCKET: ${{ secrets.AWS_BUCKET }}"
+
+      # Step 6: Deploy with Serverless Framework
       - name: Deploy with Serverless
         env:
-          NODE_ENV: ${{secrets.NODE_ENV}}
-          SERVERLESS_ACCESS_KEY: ${{secrets.SERVERLESS_ACCESS_KEY}}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
-          JWT_SECRET: ${{secrets.JWT_SECRET}}
-          RESEND_API: ${{secrets.RESEND_API}}
-          OPENSSL_CONF: ${{secrets.OPENSSL_CONF}}
-          AWS_BUCKET: ${{secrets.AWS_BUCKET}}
-          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-        run: npx serverless deploy --stage ${{secrets.NODE_ENV}}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          RESEND_API: ${{ secrets.RESEND_API }}
+          OPENSSL_CONF: ${{ secrets.OPENSSL_CONF }}
+          AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+        run: npx serverless deploy --stage ${{ secrets.NODE_ENV }}
+
+      # Step 7: Post-deployment confirmation
+      - name: Post-deployment Confirmation
+        run: echo "Deployment to AWS completed successfully!"
