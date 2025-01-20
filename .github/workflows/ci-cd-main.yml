@@ -50,5 +50,12 @@ jobs:
       # Step 7: Deploy with Serverless (Development)
       - name: Deploy with Serverless (Development)
         env:
-          NODE_ENV: development
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          RESEND_API: ${{ secrets.RESEND_API }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          OPENSSL_CONF: ${{ secrets.OPENSSL_CONF }}
+          AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+
         run: yarn deploy:dev
