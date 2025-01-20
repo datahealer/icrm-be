@@ -3,49 +3,46 @@ name: Deploy to AWS
 on:
   push:
     branches:
-      - main
+      - main  # Trigger the deployment on push to the main branch
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Use Ubuntu as the runner
 
     steps:
-      # Step 1: Check out the code
+      # Step 1: Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Install git (needed for SSH)
-      - name: Install git
-        run: sudo apt-get update && sudo apt-get install -y git
-
-      # Step 3: Set up SSH keys
-      - name: Set up SSH keys
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      # Step 4: Set up Node.js (version 18)
-      - name: Set up Node.js
+      # Step 2: Install dependencies
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: "yarn"
+          node-version: 18  # You can use any version of Node.js here
 
-      # Step 5: Install dependencies using Yarn
+      # Step 3: Install Yarn
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      # Step 4: Install dependencies using Yarn
       - name: Install dependencies
         run: yarn install
 
-      # Step 6: Install Serverless framework using Yarn
+      # Step 5: Install Serverless Framework globally
       - name: Install Serverless
         run: yarn global add serverless
 
+      # Step 6: Set up AWS credentials and profile
+      - name: Set up AWS credentials
+        run: |
+          mkdir -p ~/.aws
+          echo "[default]" > ~/.aws/credentials
+          echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
+          echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
+          echo "region=ap-south-1" >> ~/.aws/config
 
-      # Step 8: Deploy with Serverless (Development)
-      - name: Deploy with Serverless (Development)
+      # Step 7: Deploy using Serverless
+      - name: Deploy with Serverless (Production)
         env:
           NODE_ENV: ${{ secrets.NODE_ENV }}
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
@@ -54,7 +51,6 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           OPENSSL_CONF: ${{ secrets.OPENSSL_CONF }}
           AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_PROFILE: inzint-internal  # Optional if you use a profile, otherwise skip this line
+        run: yarn deploy:directprod  # Make sure your deploy command in package.json is correct
 
-        run: yarn deploy:directprod
