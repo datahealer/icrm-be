@@ -10,7 +10,7 @@
     "dev": "cross-env NODE_ENV=development sls offline start --stage offline",
     "offline": "NODE_ENV=development sls offline start --stage offline",
     "deploy:dev": "NODE_ENV=development serverless deploy --aws-profile inzint-internal --stage development",
-    "deploy:directprod":	"AWS_PROFILE=inzint-internal NODE_ENV=production serverless deploy   --stage prod"
+    "deploy:directprod":	"serverless deploy   --stage prod"
   },
   "keywords": [],
   "author": "",

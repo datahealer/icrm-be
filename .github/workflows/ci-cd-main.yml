@@ -51,6 +51,6 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           OPENSSL_CONF: ${{ secrets.OPENSSL_CONF }}
           AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
-          AWS_PROFILE: inzint-internal  # Optional if you use a profile, otherwise skip this line
+          AWS_REGION: ap-south-1
         run: yarn deploy:directprod  # Make sure your deploy command in package.json is correct
 
