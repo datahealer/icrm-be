@@ -36,5 +36,5 @@ jobs:
       # Step 5: Deploy with Serverless Framework
       - name: Deploy with Serverless
         env:
-          NODE_ENV: development
-        run: npx serverless deploy --stage development
+          NODE_ENV: ${{secrets.NODE_ENV}}
+        run: npx serverless deploy --stage ${{secrets.NODE_ENV}}
