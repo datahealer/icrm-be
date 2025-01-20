@@ -24,6 +24,9 @@ jobs:
       # Step 3: Install dependencies using Yarn
       - name: Install dependencies
         run: yarn install
+      
+      - name: Unset AWS_PROFILE
+        run: unset AWS_PROFILE
 
       # Step 4: Configure AWS credentials
       - name: Configure AWS credentials
@@ -33,17 +36,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      # Step 5: Log all secrets (FOR DEBUGGING ONLY)
-      - name: Print secrets for debugging
-        run: |
-          echo "NODE_ENV: $(echo $NODE_ENV | base64 --wrap=0)"
-          echo "SERVERLESS_ACCESS_KEY: $(echo $SERVERLESS_ACCESS_KEY | base64 --wrap=0)"
-          echo "MONGODB_URL: $(echo $MONGODB_URL | base64 --wrap=0)"
-          echo "JWT_SECRET: $(echo $JWT_SECRET | base64 --wrap=0)"
-          echo "RESEND_API: $(echo $RESEND_API | base64 --wrap=0)"
-          echo "OPENSSL_CONF: $(echo $OPENSSL_CONF | base64 --wrap=0)"
-          echo "AWS_BUCKET: $(echo $AWS_BUCKET | base64 --wrap=0)"
-      # Step 6: Deploy with Serverless Framework
+      # Step 5: Deploy with Serverless Framework
       - name: Deploy with Serverless
         env:
           NODE_ENV: ${{ secrets.NODE_ENV }}
@@ -54,7 +47,3 @@ jobs:
           OPENSSL_CONF: ${{ secrets.OPENSSL_CONF }}
           AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
         run: npx serverless deploy --stage ${{ secrets.NODE_ENV }}
-
-      # Step 7: Post-deployment confirmation
-      - name: Post-deployment Confirmation
-        run: echo "Deployment to AWS completed successfully!"
