@@ -13,8 +13,8 @@ jobs:
       # Step 1: Check out the code
       - name: Checkout code
         uses: actions/checkout@v3
-        run: sudo apt-get update && sudo apt-get install -y git
         run: |
+          sudo apt-get update && sudo apt-get install -y git
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
@@ -41,9 +41,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      # Step 5: Deploy with Serverless using the deploy:dev script
+      # Step 5: Deploy with Serverless (Development)
       - name: Deploy with Serverless (Development)
         env:
           NODE_ENV: development
-          AWS_PROFILE: inzint-internal
         run: yarn deploy:dev
