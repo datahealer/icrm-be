@@ -38,4 +38,11 @@ jobs:
         env:
           NODE_ENV: ${{secrets.NODE_ENV}}
           SERVERLESS_ACCESS_KEY: ${{secrets.SERVERLESS_ACCESS_KEY}}
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
+          RESEND_API: ${{secrets.RESEND_API}}
+          OPENSSL_CONF: ${{secrets.OPENSSL_CONF}}
+          AWS_BUCKET: ${{secrets.AWS_BUCKET}}
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
         run: npx serverless deploy --stage ${{secrets.NODE_ENV}}
