@@ -1,0 +1,32 @@
+name: Manual Trigger Script
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest 
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js (if you need Node.js for your script)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18  # Specify your required Node.js version
+
+      # Step 3: Install dependencies (if required)
+      - name: Install dependencies
+        run: |
+          npm install -g yarn  
+          yarn install
+
+      # Step 4: Run your script
+      - name: Run Script
+        run: |
+          # Replace this with your actual script
+          echo "Running manual script..."
+          node script.js
