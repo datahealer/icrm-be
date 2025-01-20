@@ -58,4 +58,4 @@ jobs:
           OPENSSL_CONF: ${{ secrets.OPENSSL_CONF }}
           AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
 
-        run: yarn deploy:dev
+        run: serverless deploy --stage ${{ secrets.NODE_ENV }}
