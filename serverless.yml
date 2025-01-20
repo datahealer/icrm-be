@@ -12,7 +12,6 @@ provider:
    RESEND_API: ${env:RESEND_API}
    JWT_SECRET: ${env:JWT_SECRET}
    OPENSSL_CONF: ${env:OPENSSL_CONF}
-   PORT: ${env:PORT}
   iamRoleStatements:
     - Effect: Allow
       Action:
