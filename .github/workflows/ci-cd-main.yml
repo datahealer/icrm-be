@@ -24,9 +24,6 @@ jobs:
       # Step 3: Install dependencies using Yarn
       - name: Install dependencies
         run: yarn install
-      
-      - name: Unset AWS_PROFILE
-        run: unset AWS_PROFILE
 
       # Step 4: Configure AWS credentials
       - name: Configure AWS credentials
@@ -36,14 +33,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      # Step 5: Deploy with Serverless Framework
-      - name: Deploy with Serverless
+      # Step 5: Deploy with Serverless using the deploy:dev script
+      - name: Deploy with Serverless (Development)
         env:
-          NODE_ENV: ${{ secrets.NODE_ENV }}
-          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
-          MONGODB_URL: ${{ secrets.MONGODB_URL }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          RESEND_API: ${{ secrets.RESEND_API }}
-          OPENSSL_CONF: ${{ secrets.OPENSSL_CONF }}
-          AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
-        run: npx serverless deploy --stage ${{ secrets.NODE_ENV }}
+          NODE_ENV: development
+          AWS_PROFILE: inzint-internal
+        run: yarn deploy:dev
