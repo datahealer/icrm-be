@@ -13,8 +13,14 @@ jobs:
       # Step 1: Check out the code
       - name: Checkout code
         uses: actions/checkout@v3
+
+      # Step 2: Install git (needed for SSH)
+      - name: Install git
+        run: sudo apt-get update && sudo apt-get install -y git
+
+      # Step 3: Set up SSH keys
+      - name: Set up SSH keys
         run: |
-          sudo apt-get update && sudo apt-get install -y git
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
@@ -22,18 +28,18 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # Step 2: Set up Node.js (version 18)
+      # Step 4: Set up Node.js (version 18)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: "yarn"
 
-      # Step 3: Install dependencies using Yarn
+      # Step 5: Install dependencies using Yarn
       - name: Install dependencies
         run: yarn install
 
-      # Step 4: Configure AWS credentials
+      # Step 6: Configure AWS credentials
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -41,7 +47,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      # Step 5: Deploy with Serverless (Development)
+      # Step 7: Deploy with Serverless (Development)
       - name: Deploy with Serverless (Development)
         env:
           NODE_ENV: development
