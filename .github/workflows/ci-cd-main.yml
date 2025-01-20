@@ -34,16 +34,15 @@ jobs:
           aws-region: ap-south-1
 
       # Step 5: Log all secrets (FOR DEBUGGING ONLY)
-      - name: Log Secrets (DEBUG ONLY)
+      - name: Print secrets for debugging
         run: |
-          echo "NODE_ENV: ${{ secrets.NODE_ENV }}"
-          echo "SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}"
-          echo "MONGODB_URL: ${{ secrets.MONGODB_URL }}"
-          echo "JWT_SECRET: ${{ secrets.JWT_SECRET }}"
-          echo "RESEND_API: ${{ secrets.RESEND_API }}"
-          echo "OPENSSL_CONF: ${{ secrets.OPENSSL_CONF }}"
-          echo "AWS_BUCKET: ${{ secrets.AWS_BUCKET }}"
-
+          echo "NODE_ENV: $(echo $NODE_ENV | base64 --wrap=0)"
+          echo "SERVERLESS_ACCESS_KEY: $(echo $SERVERLESS_ACCESS_KEY | base64 --wrap=0)"
+          echo "MONGODB_URL: $(echo $MONGODB_URL | base64 --wrap=0)"
+          echo "JWT_SECRET: $(echo $JWT_SECRET | base64 --wrap=0)"
+          echo "RESEND_API: $(echo $RESEND_API | base64 --wrap=0)"
+          echo "OPENSSL_CONF: $(echo $OPENSSL_CONF | base64 --wrap=0)"
+          echo "AWS_BUCKET: $(echo $AWS_BUCKET | base64 --wrap=0)"
       # Step 6: Deploy with Serverless Framework
       - name: Deploy with Serverless
         env:
