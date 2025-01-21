@@ -32,13 +32,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Instead of bodyParser.urlencoded
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    credentials: true,
-  })
-);
+
 
 // Routes
 app.use("/auth", userRoutes);
