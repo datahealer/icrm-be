@@ -27,7 +27,16 @@ functions:
       - http:
           path: /{proxy+}
           method: any
-
+          cors:
+            origin: 'https://main.d2q0ys24czjejd.amplifyapp.com'
+            headers:
+              - Content-Type
+              - Authorization
+              - Access-Control-Allow-Origin
+              - X-Requested-With
+              - Accept
+              - Origin
+            allowCredentials: true         
   checkOvertimeAllocations:
     handler: controllers/ResourceController.updateOvertimeAllocationStatus
     events:
