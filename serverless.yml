@@ -47,7 +47,7 @@ functions:
           path: /create-people
           method: post
           private: true
-        timeout: 600
+    timeout: 600
 
 
 
