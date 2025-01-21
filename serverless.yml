@@ -41,7 +41,7 @@ functions:
           path: /insert-asset
           method: post
   createPeople:
-    handler: controllers/peopleController.createPerson
+    handler: controllers/peopleController.createAdmin
     events:
       - http: 
           path: /create-people

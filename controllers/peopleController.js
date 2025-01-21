@@ -33,6 +33,49 @@ async function createPerson(req, res) {
   }
 }
 
+export const createAdmin = async (event) => {
+  try {
+    const reqBody = JSON.parse(event.body);
+
+    // Ensure conditional fields are provided
+    if (
+      reqBody.nature === "WORKER_UNDER_CONTRACTOR" &&
+      !reqBody.contractorId
+    ) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          message: "contractorId is required for WORKER_UNDER_CONTRACTOR.",
+        }),
+      };
+    }
+
+    if (reqBody.nature === "EMPLOYEE" && !reqBody.employeeId) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: "employeeId is required for EMPLOYEE." }),
+      };
+    }
+
+    if (reqBody.password) {
+      const saltRounds = 10;
+      reqBody.password = await bcrypt.hash(reqBody.password, saltRounds);
+    }
+
+    const person = new People(reqBody);
+    const result = await person.save();
+
+    return {
+      statusCode: 201,
+      body: JSON.stringify(result),
+    };
+  } catch (error) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: error.message }),
+    };
+  }
+};
 // Get all people
 const getPeople = async (req, res, next) => {
   try {

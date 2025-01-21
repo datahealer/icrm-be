@@ -13,7 +13,7 @@ import { auth } from "../middleware/Auth.js";
 const router = express.Router();
 
 // Create a new person
-router.post("/create", createPerson);
+router.post("/create", auth, createPerson);
 
 // Get all people
 router.get("/getPeople", auth, getPeople);
