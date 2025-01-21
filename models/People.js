@@ -23,10 +23,12 @@ const peopleSchema = new Schema(
     },
     workEmail: {
       type: String,
+      unique: true,
       // required: true,
     },
     personalEmail: {
       type: String,
+      unique: true,
       // required: true,
     },
     billingEmail: {

@@ -2,6 +2,8 @@ import People from "../models/People.js";
 import APIFeatures from "../utils/apiFeatures.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import connect from "../config/database.js";
+
 
 // Create a new person
 async function createPerson(req, res) {
@@ -35,6 +37,7 @@ async function createPerson(req, res) {
 
 export const createAdmin = async (event) => {
   try {
+    await  connect();
     const reqBody = JSON.parse(event.body);
 
     // Ensure conditional fields are provided
