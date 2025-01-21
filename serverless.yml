@@ -40,6 +40,14 @@ functions:
       - http:
           path: /insert-asset
           method: post
+  createPeople:
+    handler: controllers/peopleController.createPerson
+    events:
+      -http: 
+          path: /create-people
+          method: post
+          private: true
+        timeout: 600
 
 
 
