@@ -15,19 +15,23 @@ export const insertAsset = async () => {
     await Item.insertMany(formattedData, { ordered: false });
     return true;
   } catch (error) {
-    console.log(error.message);
-    return false;
+    if (error.name === "MongoBulkWriteError" && error.code === 11000) {
+      console.warn("Duplicate key errors encountered, but proceeding without failure.");
+      return true; 
+    } else {
+      console.error("An unexpected error occurred:", error.message);
+      return false; 
+    }
   }
 };
 
 (async () => {
   const result = await insertAsset();
   if (result) {
-    console.log("Script completed successfully.");
+    console.log("Script completed successfully, with or without duplicates.");
+    process.exit(0);
   } else {
-    console.error("Script encountered errors.");
+    console.error("Script encountered critical errors.");
+    process.exit(1);
   }
-
-  // Ensure process exits after completion
-  process.exit(result ? 0 : 1);
 })();
