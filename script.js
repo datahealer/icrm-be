@@ -20,4 +20,14 @@ export const insertAsset = async () => {
   }
 };
 
-insertAsset();
+(async () => {
+  const result = await insertAsset();
+  if (result) {
+    console.log("Script completed successfully.");
+  } else {
+    console.error("Script encountered errors.");
+  }
+
+  // Ensure process exits after completion
+  process.exit(result ? 0 : 1);
+})();
