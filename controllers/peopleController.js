@@ -221,7 +221,7 @@ export const loginPerson = async (req, res) => {
       res.cookie("authToken", token, {
         httpOnly: true,
         secure: true,
-        sameSite: "Strict",
+        sameSite: "Lax",
         maxAge: 24 * 60 * 60 * 1000,
         path: "/",
         domain: "main.d2q0ys24czjejd.amplifyapp.com",
