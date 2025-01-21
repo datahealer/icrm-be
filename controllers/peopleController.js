@@ -220,12 +220,13 @@ export const loginPerson = async (req, res) => {
 
       res.cookie("authToken", token, {
         httpOnly: true,
-        secure: false,
+        secure: process.env.NODE_ENV === "production",
         sameSite: "Strict",
         maxAge: 24 * 60 * 60 * 1000,
+        domain: "https://main.d2q0ys24czjejd.amplifyapp.com/"
       });
 
-      await person.save();
+      await person.save()
 
       return res.status(200).json({
         success: true,
