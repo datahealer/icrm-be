@@ -43,7 +43,7 @@ functions:
   createPeople:
     handler: controllers/peopleController.createPerson
     events:
-      -http: 
+      - http: 
           path: /create-people
           method: post
           private: true
