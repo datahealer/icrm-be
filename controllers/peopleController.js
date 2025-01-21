@@ -224,7 +224,7 @@ export const loginPerson = async (req, res) => {
         sameSite: "Lax",
         maxAge: 24 * 60 * 60 * 1000,
         path: "/",
-        domain: "main.d2q0ys24czjejd.amplifyapp.com",
+        domain: "https://main.d2q0ys24czjejd.amplifyapp.com/",
       });
 
       await person.save()
