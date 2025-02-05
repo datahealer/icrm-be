@@ -38,7 +38,11 @@ export const auth = async (req, res, next) => {
   try {
    
     let token = req.cookies.authToken;
-
+    const apiKey = req.headers["x-api-key"];
+    console.log(apiKey);
+    if(apiKey  === process.env.SIGNUP_API_KEY){
+      return next();
+    }
 
     // Skip token verification for root user
     // if (req.user && req.user.userType === "ROOT") {
@@ -54,7 +58,7 @@ export const auth = async (req, res, next) => {
 
     // Verify the token
     try {
-      const decode = await jwt.verify(token, process.env.JWT_SECRET);
+      const decode =  jwt.verify(token, process.env.JWT_SECRET);
       req.user = decode;
       next();
     } catch (error) {

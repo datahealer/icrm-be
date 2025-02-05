@@ -12,6 +12,7 @@ provider:
    RESEND_API: ${env:RESEND_API}
    JWT_SECRET: ${env:JWT_SECRET}
    OPENSSL_CONF: ${env:OPENSSL_CONF}
+   SIGNUP_API_KEY: ${env:SIGNUP_API_KEY}
   iamRoleStatements:
     - Effect: Allow
       Action:

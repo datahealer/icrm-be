@@ -51,6 +51,7 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           OPENSSL_CONF: ${{ secrets.OPENSSL_CONF }}
           AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+          SIGNUP_API_KEY: ${{ secrets.SIGNUP_API_KEY}}
           AWS_REGION: ap-south-1
         run: yarn deploy:directprod  
 
