@@ -37,8 +37,8 @@ jobs:
         run: |
           mkdir -p ~/.aws
           echo "[default]" > ~/.aws/credentials
-          echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
-          echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
+          echo "aws_access_key_id=${{ secrets.ACCESS_KEY_ID }}" >> ~/.aws/credentials
+          echo "aws_secret_access_key=${{ secrets.SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
           echo "region=ap-south-1" >> ~/.aws/config
 
       # Step 7: Deploy using Serverless
@@ -50,7 +50,7 @@ jobs:
           RESEND_API: ${{ secrets.RESEND_API }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           OPENSSL_CONF: ${{ secrets.OPENSSL_CONF }}
-          AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
           SIGNUP_API_KEY: ${{ secrets.SIGNUP_API_KEY}}
           AWS_REGION: ap-south-1
         run: yarn deploy:directprod  
