@@ -52,6 +52,9 @@ jobs:
           OPENSSL_CONF: ${{ secrets.OPENSSL_CONF }}
           AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
           SIGNUP_API_KEY: ${{ secrets.SIGNUP_API_KEY}}
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          AWS_BUCKET: ${{secrets.AWS_BUCKET}}
           AWS_REGION: ap-south-1
         run: yarn deploy:directprod  
 
