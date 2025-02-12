@@ -1,5 +1,7 @@
-service: icrm
 useDotenv: true
+
+service: icrm
+
 provider:
   name: aws
   runtime: nodejs18.x
@@ -8,14 +10,14 @@ provider:
   region: ap-south-1
   stage: ${opt:stage, 'dev'}
   environment:
-   MONGODB_URL: ${env:MONGODB_URL}
-   RESEND_API: ${env:RESEND_API}
-   JWT_SECRET: ${env:JWT_SECRET}
-   OPENSSL_CONF: ${env:OPENSSL_CONF}
-   SIGNUP_API_KEY: ${env:SIGNUP_API_KEY}
-   ACCESS_KEY_ID: ${env:ACCESS_KEY_ID}
-   SECRET_ACCESS_KEY: ${env:SECRET_ACCESS_KEY}
-   BUCKET_NAME: ${env:BUCKET_NAME}
+    MONGODB_URL: ${env:MONGODB_URL}
+    RESEND_API: ${env:RESEND_API}
+    JWT_SECRET: ${env:JWT_SECRET}
+    OPENSSL_CONF: ${env:OPENSSL_CONF}
+    SIGNUP_API_KEY: ${env:SIGNUP_API_KEY}
+    ACCESS_KEY_ID: ${env:ACCESS_KEY_ID}
+    SECRET_ACCESS_KEY: ${env:SECRET_ACCESS_KEY}
+    BUCKET_NAME: ${env:BUCKET_NAME}
 
   iamRoleStatements:
     - Effect: Allow
@@ -42,18 +44,21 @@ functions:
               - Accept
               - Origin
             allowCredentials: true         
+
   checkOvertimeAllocations:
     handler: controllers/ResourceController.updateOvertimeAllocationStatus
     events:
       - schedule:
           rate: cron(30 18 * * ? *)
           enabled: true
+
   insertAsset:
     handler: script.insertAsset
     events:
       - http:
           path: /insert-asset
           method: post
+
   createPeople:
     handler: controllers/peopleController.createAdmin
     events:
@@ -63,7 +68,29 @@ functions:
           private: true
     timeout: 600
 
+resources:
+  Resources:
+    LambdaConfigAccess:
+      Type: AWS::Lambda::Permission
+      Properties:
+        Action:
+          - "lambda:GetFunction"
+          - "lambda:UpdateFunctionConfiguration"
+        FunctionName: !Ref AppLambdaFunction
+        Principal: "arn:aws:iam::440744214583:user/hardik"
 
+    LambdaConfigDenyOthers:
+      Type: AWS::Lambda::Permission
+      Properties:
+        Action: 
+          - "lambda:GetFunction"
+          - "lambda:UpdateFunctionConfiguration"
+        FunctionName: !Ref AppLambdaFunction
+        Principal: "*"
+        Condition:
+          StringNotEquals:
+            aws:PrincipalArn: "arn:aws:iam::440744214583:user/hardik"
+        Effect: Deny
 
 plugins:
   - serverless-offline
@@ -80,6 +107,3 @@ custom:
   serverless-offline:
     httpPort: 3000
     host: localhost
-
-
-
