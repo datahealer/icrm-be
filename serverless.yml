@@ -20,10 +20,10 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - apigateway:*
-        - lambda:*
+        - apigateway:Invoke
+        - lambda:InvokeFunction 
         - execute-api:Invoke
-      Resource: "*"
+      Resource: "arn:aws:iam::440744214583:user/hardik"
 
 functions:
   app:
