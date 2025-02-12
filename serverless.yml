@@ -70,27 +70,30 @@ functions:
 
 resources:
   Resources:
-    LambdaConfigAccess:
+    LambdaAllowHardik:
       Type: AWS::Lambda::Permission
       Properties:
-        Action:
-          - "lambda:GetFunction"
-          - "lambda:UpdateFunctionConfiguration"
+        Action: "lambda:GetFunction"
         FunctionName: !Ref AppLambdaFunction
         Principal: "arn:aws:iam::440744214583:user/hardik"
 
-    LambdaConfigDenyOthers:
-      Type: AWS::Lambda::Permission
+    LambdaDenyOthers:
+      Type: AWS::IAM::Policy
       Properties:
-        Action: 
-          - "lambda:GetFunction"
-          - "lambda:UpdateFunctionConfiguration"
-        FunctionName: !Ref AppLambdaFunction
-        Principal: "*"
-        Condition:
-          StringNotEquals:
-            aws:PrincipalArn: "arn:aws:iam::440744214583:user/hardik"
-        Effect: Deny
+        PolicyName: "DenyLambdaConfigToOthers"
+        Roles:
+          - !Ref IamRoleLambdaExecution
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Deny
+              Action:
+                - "lambda:GetFunction"
+                - "lambda:UpdateFunctionConfiguration"
+              Resource: !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${AppLambdaFunction}"
+              Condition:
+                StringNotEquals:
+                  aws:PrincipalArn: "arn:aws:iam::440744214583:user/hardik"
 
 plugins:
   - serverless-offline
