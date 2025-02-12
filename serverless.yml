@@ -20,26 +20,10 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - lambda:GetFunctionConfiguration  
+        - apigateway:*
+        - lambda:*
+        - execute-api:Invoke
       Resource: "*"
-      Condition:
-        StringEquals:
-          aws:PrincipalArn: "arn:aws:iam::440744214583:user/hardik"
-    - Effect: Deny 
-      Action:
-        - lambda:GetFunctionConfiguration
-      Resource: "*"
-      Condition:
-        StringNotEquals:
-          aws:PrincipalArn: "arn:aws:iam::440744214583:user/hardik"
-    - Effect: Deny
-      Action: 
-        - lambda:GetFunction
-      Resouce: "*"
-      Condition: 
-        StringNotEquals:
-          aws:PrincipalArn: "arn:aws:iam::440744214583:user/hardik"
-
 
 functions:
   app:
